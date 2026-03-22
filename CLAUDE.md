@@ -2,6 +2,7 @@
 
 @docs/project-context.md
 @docs/architecture-and-tests.md
+@docs/tdd-workflow.md
 
 ## Setup
 
