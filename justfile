@@ -2,28 +2,28 @@
 
 # Run all unit tests
 test:
-    npx vitest run
+    pnpm exec vitest run
 
 # Run tests in watch mode
 test-watch:
-    npx vitest
+    pnpm exec vitest
 
 # Run a single test file
 test-file file:
-    npx vitest run {{file}}
+    pnpm exec vitest run {{file}}
 
 # TypeScript type checking
 typecheck:
-    npx tsc --build
+    pnpm exec tsc --build
 
 # Typecheck + run all tests
 lint:
-    npx tsc --build && npx vitest run
+    pnpm exec tsc --build && pnpm exec vitest run
 
 # Start development server
 dev:
-    npx vite
+    pnpm exec vite
 
 # Production build
 build:
-    npx tsc --build && npx vite build
+    pnpm exec tsc --build && pnpm exec vite build

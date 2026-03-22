@@ -1,13 +1,17 @@
 # AI Reading Companion
 
+## Setup
+
+Managed by mise. Run `mise install` to get the correct Node.js and pnpm versions.
+
 ## Commands
 
 ```
-npm run dev          # start dev server (Vite)
-npm run build        # typecheck + production build
-npm run test         # run all unit tests (Vitest)
-npm run test:watch   # run tests in watch mode
-npm run typecheck    # tsc --build
+pnpm dev             # start dev server (Vite)
+pnpm build           # typecheck + production build
+pnpm test            # run all unit tests (Vitest)
+pnpm test:watch      # run tests in watch mode
+pnpm typecheck       # tsc --build
 ```
 
 Or via justfile:
@@ -71,7 +75,7 @@ TranslationCache (standalone, two-tier: memory + Dexie)
 - Prefer `interface` over `type` for object shapes.
 - Test files live next to source: `foo.ts` → `foo.test.ts`.
 - Write tests in GIVEN/WHEN/THEN structure using `describe`/`it`/`expect`.
-- Mock AI API calls in unit tests. Never make real API calls in `npm run test`.
+- Mock AI API calls in unit tests. Never make real API calls in `pnpm test`.
 
 ## Boundaries
 
