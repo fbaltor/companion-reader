@@ -104,5 +104,5 @@ Implement services bottom-up following the dependency graph:
 
 ## Reference
 
-Full requirements and UX decisions: `project-context.md`
-Domain models, service interfaces, 60+ behavioral test specs: `architecture-and-tests.md`
+Full requirements and UX decisions: `docs/project-context.md`
+Domain models, service interfaces, 60+ behavioral test specs: `docs/architecture-and-tests.md`
