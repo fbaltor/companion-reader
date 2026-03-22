@@ -1,3 +1,31 @@
 [tools]
 node = "22"
 pnpm = "10"
+
+[tasks.dev]
+description = "Start development server"
+run = "pnpm exec vite"
+
+[tasks.build]
+description = "Typecheck + production build"
+run = "pnpm exec tsc --build && pnpm exec vite build"
+
+[tasks.test]
+description = "Run all unit tests"
+run = "pnpm exec vitest run"
+
+[tasks."test:watch"]
+description = "Run tests in watch mode"
+run = "pnpm exec vitest"
+
+[tasks."test:file"]
+description = "Run a single test file"
+run = "pnpm exec vitest run {{arg(name='file')}}"
+
+[tasks.typecheck]
+description = "TypeScript type checking"
+run = "pnpm exec tsc --build"
+
+[tasks.check]
+description = "Typecheck + run all tests (pre-commit gate)"
+depends = ["typecheck", "test"]

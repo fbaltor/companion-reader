@@ -1,5 +1,8 @@
 # AI Reading Companion
 
+@docs/project-context.md
+@docs/architecture-and-tests.md
+
 ## Setup
 
 Managed by mise. Run `mise install` to get the correct Node.js and pnpm versions.
@@ -7,23 +10,13 @@ Managed by mise. Run `mise install` to get the correct Node.js and pnpm versions
 ## Commands
 
 ```
-pnpm dev             # start dev server (Vite)
-pnpm build           # typecheck + production build
-pnpm test            # run all unit tests (Vitest)
-pnpm test:watch      # run tests in watch mode
-pnpm typecheck       # tsc --build
-```
-
-Or via justfile:
-
-```
-just dev             # start dev server
-just build           # typecheck + production build
-just test            # run all unit tests
-just test-watch      # tests in watch mode
-just typecheck       # type checking only
-just lint            # typecheck + tests
-just test-file <path> # run single test file
+mise run dev             # start dev server (Vite)
+mise run build           # typecheck + production build
+mise run test            # run all unit tests (Vitest)
+mise run test:watch      # run tests in watch mode
+mise run test:file -- <path>  # run single test file
+mise run typecheck       # tsc --build
+mise run check           # typecheck + tests (pre-commit gate)
 ```
 
 ## Tech Stack
@@ -69,24 +62,22 @@ TranslationCache (standalone, two-tier: memory + Dexie)
 
 ## Conventions
 
-- Return `Result<T, E>` from all service methods. Never throw exceptions.
-- Use `ok(value)` and `err(error)` helpers from `src/models/result.ts`.
-- Use named exports. Never use default exports.
-- Prefer `interface` over `type` for object shapes.
+- Return `Result<T, E>` from all service methods. Use `ok(value)` and `err(error)` helpers from `src/models/result.ts`.
+- Use named exports. Prefer `interface` over `type` for object shapes.
 - Test files live next to source: `foo.ts` → `foo.test.ts`.
 - Write tests in GIVEN/WHEN/THEN structure using `describe`/`it`/`expect`.
-- Mock AI API calls in unit tests. Never make real API calls in `pnpm test`.
+- Mock AI API calls in unit tests.
 
-## Boundaries
+## Never
 
-Never import from `services/` or `ui/` in `models/`.
-Never import from `ui/` in `services/`.
-Never import format-specific code (EPUB XML, PDF structures) outside a FormatAdapter.
-Never call TranslationService or ExplanationService directly from UI code.
-  Use TranslationPrefetcher for translations; dispatch actions for explanations.
-Never throw exceptions in service code. Return Result types.
-Never mutate the Book model after import (except `language` and `languageOverridden`).
-TranslationPrefetcher is the sole decider of when to translate.
+- Never throw exceptions in service code. Return Result types.
+- Never import from `services/` or `ui/` in `models/`.
+- Never import from `ui/` in `services/`.
+- Never import format-specific code (EPUB XML, PDF structures) outside a FormatAdapter.
+- Never call TranslationService or ExplanationService directly from UI code.
+- Never mutate the Book model after import (except `language` and `languageOverridden`).
+- Never make real API calls in `mise run test`.
+- Never use default exports.
 
 ## Implementation Order
 
@@ -101,8 +92,3 @@ Implement services bottom-up following the dependency graph:
 7. BookImportService (depends on adapters + language detection)
 8. TranslationPrefetcher (depends on translation service, cache, settings)
 9. UI layer (depends on all services)
-
-## Reference
-
-Full requirements and UX decisions: `docs/project-context.md`
-Domain models, service interfaces, 60+ behavioral test specs: `docs/architecture-and-tests.md`

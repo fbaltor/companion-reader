@@ -5,3 +5,8 @@ dist
 .env
 .env.*
 *.tsbuildinfo
+
+# Claude Code runtime (plans, session state) — track agents and skills only
+.claude/*
+!.claude/agents/
+!.claude/skills/
